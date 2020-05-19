@@ -70,15 +70,16 @@ class Blockchain {
       // UTC timestamp
       block.time = new Date().getTime().toString().slice(0, -3);
       // previous block hash
-      if (self.getChainHeight() > 0) {
-        block.previousBlockHash = self.chain[self.getChainHeight() - 1].hash;
+      if ((await self.getChainHeight()) > 0) {
+        block.previousBlockHash =
+          self.chain[(await self.getChainHeight()) - 1].hash;
       }
       // Block hash with SHA256 using newBlock and converting to a string
       block.hash = SHA256(JSON.stringify(block)).toString();
       if (block.hash) {
         // Adding block object to chain
-        self.chain.push(block);
         self.height = self.height + 1;
+        self.chain.push(block);
         console.log(self.height);
         resolve(block);
       } else {
@@ -152,7 +153,8 @@ class Blockchain {
   getBlockByHash(hash) {
     let self = this;
     return new Promise((resolve, reject) => {
-      let block = self.chain.filter((block) => block.hash === hash)[0];
+      let block = self.chain.filter((a) => a.hash === hash)[0];
+      console.log(block);
       if (block) {
         resolve(block);
       } else {

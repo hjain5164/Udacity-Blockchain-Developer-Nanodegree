@@ -40,16 +40,16 @@ class Block {
       // get block hash
       let blockHash = self.hash;
       // remove block hash to test block integrity
-      self.hash = "";
+      self.hash = null;
       // generate block hash
-      let validBlockHash = SHA256(JSON.stringify(block)).toString();
+      let validBlockHash = SHA256(JSON.stringify(self)).toString();
       // Compare
       if (blockHash === validBlockHash) {
         self.hash = blockHash;
         resolve(true);
       } else {
         console.log("Error");
-        reject(false);
+        resolve(false);
       }
       // Save in auxiliary variable the current block hash
 
@@ -72,11 +72,11 @@ class Block {
    */
   getBData() {
     // Getting the encoded data saved in the Block
-    block_data = this.body;
+    let block_data = this.body;
     // Decoding the data to retrieve the JSON representation of the object
-    j = hex2ascii(block_data);
+    let j = hex2ascii(block_data);
     // Parse the data to an object to be retrieve.
-    j_obj = JSON.parse(j);
+    let j_obj = JSON.parse(j);
     // Resolve with the data if the object isn't the Genesis block
     if (j_obj && this.height > 0) {
       console.log(j_obj);
