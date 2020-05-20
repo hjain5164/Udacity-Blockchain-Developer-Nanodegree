@@ -12,8 +12,8 @@ var web3 = new Web3("HTTP://127.0.0.1:7545");
 web3.eth.getAccounts().then((accounts) => console.log(accounts));
 
 // -- Step 2: Set the sending and receiving addresses for the transaction.
-var sendingAddress = "0x8Ac9C90A2078DfD35E0849E54A25aCedFD508463";
-var receivingAddress = "0x8F9C7853622Dc0f5AFE3b9030F7f497Dc4dC61A7";
+var sendingAddress = "0x7dA7d97F9659f0171489B1BB5f114000E929c4a7";
+var receivingAddress = "0xAE3a7bA45459b35fCB566D71EE922DEA0324E962";
 
 // -- Step 3: Check the balances of each address
 web3.eth.getBalance(sendingAddress).then(console.log);
@@ -51,7 +51,7 @@ Sign the Transaction
 
 // -- Step 7: Sign the transaction with the Hex value of the private key of the sender
 var privateKeySender =
-  "ab9d2c620c7bb445f2daf7d4370f3e3e62a2e0e6e5b18500dbee055b62ad7ee5";
+  "dbecc9513a7c53c69860a8b6e5f2cddc895cae8d3ebcf6d54e0c4fdcd71f17d7";
 var privateKeySenderHex = new Buffer(privateKeySender, "hex");
 var transaction = new EthereumTransaction(rawTransaction);
 transaction.sign(privateKeySenderHex);
