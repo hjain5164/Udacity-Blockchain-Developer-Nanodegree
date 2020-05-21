@@ -65,14 +65,13 @@ class Blockchain {
     let self = this;
     return new Promise(async (resolve, reject) => {
       // Block height
-      let height = await self.getChainHeight();
+      let height = self.height;
       block.height = height + 1;
       // UTC timestamp
       block.time = new Date().getTime().toString().slice(0, -3);
       // previous block hash
-      if ((await self.getChainHeight()) > 0) {
-        block.previousBlockHash =
-          self.chain[(await self.getChainHeight()) - 1].hash;
+      if (self.height >= 0) {
+        block.previousBlockHash = self.chain[self.height].hash;
       }
       // Block hash with SHA256 using newBlock and converting to a string
       block.hash = SHA256(JSON.stringify(block)).toString();
@@ -80,7 +79,7 @@ class Blockchain {
         // Adding block object to chain
         self.height = self.height + 1;
         self.chain.push(block);
-        console.log(self.height);
+        console.log(self.chain);
         resolve(block);
       } else {
         reject("Error");
@@ -130,7 +129,7 @@ class Blockchain {
       console.log(currentTime - time <= 5 * 60);
       console.log(time);
       console.log(currentTime);
-      if (currentTime - time <= 5 * 6000) {
+      if (currentTime - time <= 5 * 60000) {
         if (bitcoinMessage.verify(message, address, signature)) {
           let b_data = { address: address, star: star };
           let b_added = new BlockClass.Block(b_data);
@@ -233,3 +232,13 @@ class Blockchain {
 }
 
 module.exports.Blockchain = Blockchain;
+
+// let blc = new Blockchain();
+// let block1 = new BlockClass.Block({ data: "Block 1" });
+// blc._addBlock(block1);
+// let block2 = new BlockClass.Block({ data: "Block 2" });
+// blc._addBlock(block2);
+// let block3 = new BlockClass.Block({ data: "Block 3" });
+// blc._addBlock(block3);
+// console.log("Done");
+// console.log(blc.chain[0]);

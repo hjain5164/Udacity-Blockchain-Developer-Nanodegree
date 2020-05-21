@@ -45,7 +45,8 @@ class Block {
       let validBlockHash = SHA256(JSON.stringify(self)).toString();
       // Compare
       if (blockHash === validBlockHash) {
-        self.hash = blockHash;
+        self.hash = validBlockHash;
+
         resolve(true);
       } else {
         console.log("Error");
